@@ -1,10 +1,27 @@
+name: CI/CD PHP Simple
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Run unit test
+      run: php test.php
+
+    - name: Login to Docker Hub
+      run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+
+    - name: Build and Push Docker Image dckr_pat_LuL7J-EqMe7_14nOSAoi3rgFRzI
+      run: |
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/devopsfinal:latest .
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/devopsfinal:latest
 
 
-        - name: Run unit test
-  run: php test.php
-
-- name: Build and Push Docker Image
-  run: |
-    docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/devopsfinal:latest .
-    docker push ${{ secrets.DOCKERHUB_USERNAME }}/enmanuelcruz:latest
+    
 
