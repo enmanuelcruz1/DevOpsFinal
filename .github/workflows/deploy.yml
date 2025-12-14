@@ -1,0 +1,10 @@
+
+
+        - name: Run unit test
+  run: php test.php
+
+- name: Build and Push Docker Image
+  run: |
+    docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/devopsfinal:latest .
+    docker push ${{ secrets.DOCKERHUB_USERNAME }}/enmanuelcruz:latest
+
